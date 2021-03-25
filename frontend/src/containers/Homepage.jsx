@@ -25,7 +25,6 @@ class Homepage extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-      console.log(this.props.id, nextProps.id, 'wilU')
       if (this.props.id !== nextProps.id) {
         this.setState({
           channelSelected: nextProps.id
@@ -40,7 +39,6 @@ class Homepage extends React.Component {
 
     render() {
       const {  id, classes } = this.props;
-      console.log(id, 'testing')
       return (
         <div className={classes.root}>
             <div className={classes.chatSection}>
@@ -53,7 +51,6 @@ class Homepage extends React.Component {
 }
 
 const mapStateToProps = (props) => {
-  console.log(props.searchReducer.result, 'msp')
   return {
     id: props.searchReducer.result ? props.searchReducer.result.id : 1
   };
