@@ -23,7 +23,8 @@ module RemeshChatApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-    
+    config.middleware.use ActionDispatch::Flash
+
     config.generators do |g|
       g.test_framework :rspec,
         :fixtures => true,

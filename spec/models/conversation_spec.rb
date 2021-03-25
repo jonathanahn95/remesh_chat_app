@@ -3,7 +3,7 @@
 # Table name: conversations
 #
 #  id         :integer          not null, primary key
-#  title      :string
+#  title      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -14,5 +14,14 @@
 require 'rails_helper'
 
 RSpec.describe Conversation, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject(:conversation) { Conversation.new(title: 'Dummy Conversation') }
+
+  describe 'validations' do
+    it { should validate_presence_of(:title) }
+    it { should validate_uniqueness_of(:title) }
+  end
+
+  describe 'associations' do
+    it { should have_many(:messages) }
+  end
 end

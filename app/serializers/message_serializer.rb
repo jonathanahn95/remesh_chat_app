@@ -17,15 +17,9 @@
 #
 #  conversation_id  (conversation_id => conversations.id)
 #
-require 'rails_helper'
+class MessageSerializer
+  include FastJsonapi::ObjectSerializer
+  attributes :text, :created_at
 
-RSpec.describe Message, type: :model do
-  describe 'validations' do
-    it { should validate_presence_of(:text) }
-  end
-
-  describe 'associations' do
-    it { should have_many(:thoughts) }
-    it { should belong_to(:conversation) }
-  end
+  has_many :thoughts
 end

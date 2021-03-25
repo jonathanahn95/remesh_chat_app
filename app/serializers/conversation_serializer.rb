@@ -11,8 +11,9 @@
 #
 #  index_conversations_on_title  (title) UNIQUE
 #
-FactoryGirl.define do
-  factory :conversation do
-    title "MyString"
-  end
+class ConversationSerializer
+  include FastJsonapi::ObjectSerializer
+  attributes :title
+
+  has_many :messages
 end

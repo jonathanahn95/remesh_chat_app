@@ -1,0 +1,2 @@
+export const FETCH_THOUGHTS = 'FETCH_THOUGHTS';
+export const CREATE_THOUGHT = 'CREATE_THOUGHT';

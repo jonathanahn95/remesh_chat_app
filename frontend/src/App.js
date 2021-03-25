@@ -1,22 +1,17 @@
-
 import React from 'react';
-import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Homepage from './containers/Homepage';
+import Thoughts from './containers/Thoughts';
+import Header from './components/Header';
 
-const fetchTestDatas = function () {
-  fetch('/api/v1/tests')
-    .then(res => res.json())
-    .then((response) => { console.log("Test datas response", response); })
-    .catch((error) => { console.log("Error while fetching test datas", error); })
-}
 
-function App() {
-  return (
-    <div className="App">
-      <button onClick={fetchTestDatas}>
-        Fetch Test Datas
-      </button>
-    </div>
-  );
-}
-
+const App = () => (
+  <div>
+    <Header />
+    <Switch>
+      <Route exact path="/" component={Homepage}/>
+      <Route exact path="/conversation/:conversationId/messages/:messageId" component={Thoughts}/>
+    </Switch>
+  </div>
+);
 export default App;
