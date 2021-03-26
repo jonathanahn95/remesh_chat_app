@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import { getTimeAndDate } from '../utils/helper'
+import { string, shape } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -89,6 +90,17 @@ const Message = ({ classes, message, conversationId }) => (
       </div>
   </div>
 );
+
+Message.propTypes = {
+  message: shape({
+    id: string,
+    type: string,
+    attributes: shape({
+      text: string
+    }),
+  })
+};
+
 
 
 export default withStyles(styles)(memo(Message));

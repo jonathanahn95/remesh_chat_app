@@ -118,7 +118,6 @@ class Search extends React.Component {
         <div></div>
       );
 
-
       return (
         <div className={classes.root}>
           <div className={classes.searchByContainer}>

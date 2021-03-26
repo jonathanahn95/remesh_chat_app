@@ -1,15 +1,8 @@
-import { getAllThoughtsForMessage, createThoughts, createThought } from '../../state/Thoughts/Thoughts-Actions';
+import { getAllThoughtsForMessage, createThought } from '../../state/Thoughts/Thoughts-Actions';
 import { GET_ALL_THOUGHTS_FOR_MESSAGE_SUCCESS }from '../../state/Thoughts/Thoughts-ActionTypes';
 import fetchMock from 'fetch-mock';
 import { mockStore } from '../../config/TestProvider';
-
-const thought = {
-    id: '1',
-    type: 'thought',
-    attributes: {
-        text: 'asd'
-    }
-}
+import { thought } from '../../config/mocks/TestData';
 
 describe('async actions', () => {
     afterEach(() => {

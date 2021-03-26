@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Message from '../components/Message'
 import { getSingleConversation } from "../state/Conversations/Conversations-Actions";
 import { getAllMessagesForConversation } from "../state/Messages/Messages-Actions";
+import { string, shape } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -92,7 +93,7 @@ class ConversationPage extends React.Component {
           </div>
         ) : messages.length ? (
              messages.map((msg) => (
-               <Message message={msg} conversationId={conversation.id}/>
+               <Message message={msg} conversationId={conversation.id} key={msg.id} />
              ))
            ) : (
              <div>No messages</div>
@@ -111,6 +112,25 @@ class ConversationPage extends React.Component {
         )
     }
 }
+
+ConversationPage.propTypes = shape({
+  conversation: shape({
+    id: string,
+    type: string,
+    attributes: shape({
+      title: string
+    }),
+  }),
+  messages: shape({
+    id: string,
+    type: string,
+    attributes: shape({
+      text: string
+    }),
+  }),
+  error: string
+}).isRequired;
+
   
 
 const mapStateToProps = ({ conversationsReducer, messagesReducer}) => {

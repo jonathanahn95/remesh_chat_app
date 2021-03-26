@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { string, shape } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -30,5 +31,14 @@ const Conversation = ({ conversation, classes, handleConversationChange }) => (
   </div>
 )
 
+Conversation.propTypes = {
+  conversation: shape({
+    id: string,
+    type: string,
+    attributes: shape({
+      title: string
+    }),
+  })
+};
 
 export default withStyles(styles)(memo(Conversation));

@@ -1,5 +1,4 @@
 import { GET_SEARCH_QUERY_FAILURE, GET_SEARCH_QUERY, CLEAR_DROPDOWN_RESULT } from './Search-ActionTypes'
-import { setSingleConversation } from '../Conversations/Conversations-Actions'
 import * as SearchApi from "./Search-Api";
 
 
@@ -40,7 +39,6 @@ export const clearDropDownRequest = (data= "") => {
         return dispatch(clearDropDownResult());
     };
   };
-
 
   export const getConversationsDropDownRequest = (query) => {
     return dispatch => {

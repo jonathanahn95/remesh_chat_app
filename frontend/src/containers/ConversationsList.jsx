@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Conversation from '../components/Conversation'
 import { getAllConversations, createConversation } from "../state/Conversations/Conversations-Actions";
+import { string, shape } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -102,32 +103,32 @@ class ConversationsList extends React.Component {
 
     render() {
         const { error, conversations, classes, channelSelected, handleConversationChange } = this.props;
-          const content = error && error.length > 0 ? (
-            <div>
-              <p>
-              Error: Unable to create conversation. 
-              &nbsp;
-              <button 
-                onClick={this.onRetry}
-              >
-                Click Here To Try Again
-              </button>
-              </p>
-            </div>
-          ) : conversations.length ? (
-            conversations.map((conversation) => (
-                <Conversation 
-                key={conversation.id} 
-                conversation={conversation} 
-                channelSelected={channelSelected} 
-                handleConversationChange={handleConversationChange} 
-              />
-            ))
-          ) : (
-            <div>
-              No Conversations Found.
-            </div>
-          )
+        const content = error && error.length > 0 ? (
+          <div>
+            <p>
+            Error: Unable to create conversation. 
+            &nbsp;
+            <button 
+              onClick={this.onRetry}
+            >
+              Click Here To Try Again
+            </button>
+            </p>
+          </div>
+        ) : conversations.length ? (
+          conversations.map((conversation) => (
+              <Conversation 
+              key={conversation.id} 
+              conversation={conversation} 
+              channelSelected={channelSelected} 
+              handleConversationChange={handleConversationChange} 
+            />
+          ))
+        ) : (
+          <div>
+            No Conversations Found.
+          </div>
+        )
           
         return (
             <div className={classes.root}>
@@ -152,6 +153,18 @@ class ConversationsList extends React.Component {
 
 }
   
+ConversationsList.propTypes = shape({
+  conversations: shape({
+    title: string,
+    id: string,
+    type: string,
+    attributes: shape({
+      title: string
+    }),
+  }),
+  error: string
+}).isRequired;
+
 
 const mapStateToProps = ({conversationsReducer}) => {
     return {

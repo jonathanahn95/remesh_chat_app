@@ -5,6 +5,8 @@ import ConversationsList from "./ConversationsList";
 import ConversationPage from "./ConversationPage";
 import { createMessage } from "../state/Messages/Messages-Actions";
 import Search from './Search'
+import { string } from 'prop-types';
+
 const styles = (theme) => {
     return {
       root: {
@@ -86,9 +88,8 @@ class Homepage extends React.Component {
       this.setState({text: ''})
     }
 
-
     render() {
-      const {  classes, conversationId } = this.props;
+      const {  classes } = this.props;
       return (
         <div className={classes.root}>
             <Search />
@@ -112,9 +113,13 @@ class Homepage extends React.Component {
       }
 }
 
+Homepage.propTypes = {
+  conversationId: string
+};
+
 const mapStateToProps = ({ conversationsReducer }) => {
   return {
-    conversationId: conversationsReducer.conversation.id || 1
+    conversationId: conversationsReducer.conversation.id || "1"
   };
 };
 

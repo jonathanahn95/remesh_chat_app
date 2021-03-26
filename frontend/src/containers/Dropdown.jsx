@@ -1,10 +1,11 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getSingleConversation } from "../state/Conversations/Conversations-Actions";
 import { clearDropDownRequest  } from "../state/Search/Search-Actions";
 import { getAllMessagesForConversation } from "../state/Messages/Messages-Actions";
+import { string, shape } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -70,6 +71,25 @@ const styles = (theme) => {
     }
   }
 
+Dropdown.propTypes = {
+  conversation: shape({
+    id: string,
+    type: string,
+    attributes: shape({
+      title: string
+    }),
+  }),
+  messages: shape({
+    conversations: shape({
+      title: string,
+      id: string,
+      type: string,
+      attributes: shape({
+        title: string
+      }),
+    })
+  })
+};
 
 const mapStateToProps = ({ conversationsReducer, messagesReducer }) => {
   return {

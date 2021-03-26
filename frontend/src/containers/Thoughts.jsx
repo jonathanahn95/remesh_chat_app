@@ -5,6 +5,7 @@ import { getAllThoughtsForMessage, createThought } from "../state/Thoughts/Thoug
 import { getSingleMessage } from "../state/Messages/Messages-Actions";
 import Thought from '../components/Thought';
 import Button from '../components/Button';
+import { string, shape } from 'prop-types';
 
 const styles = (theme) => {
     return {
@@ -144,7 +145,7 @@ class Thoughts extends React.Component {
           </p>
         </div>
       ) : thoughts.length ? (
-        thoughts.map((thought) => <Thought thought={thought} />)
+        thoughts.map((thought) => <Thought key={thought.id} thought={thought} />)
       ) : (
         <div className={classes.noThoughts}>No thoughts for this comment</div>
       )
@@ -181,6 +182,27 @@ class Thoughts extends React.Component {
         );
       }
 }
+
+Thoughts.propTypes = shape({
+  thoughts: shape({
+    text: string,
+    id: string,
+    type: string,
+    attributes: shape({
+      text: string
+    }),
+  }),
+  error: string,
+  message: shape({
+    text: string,
+    id: string,
+    type: string,
+    attributes: shape({
+      text: string
+    }),
+  }),
+}).isRequired;
+
 
 const mapStateToProps = ({ messagesReducer, thoughtsReducer }) => {
   return {

@@ -2,19 +2,7 @@ import { getSingleConversation, getAllConversations, createConversation } from '
 import { GET_SINGLE_CONVERSATION_SUCCESS, GET_ALL_CONVERSATIONS_SUCCESS } from '../../state/Conversations/Conversations-ActionTypes';
 import fetchMock from 'fetch-mock';
 import { mockStore } from '../../config/TestProvider';
-
-const conversation = {
-    id: '1',
-    type: 'conversation',
-    attributes: {
-        title: 'General'
-    },
-    relationships: {
-        messages: [
-            {id: 1, type: 'message'}
-        ]
-    }
-}
+import { conversation } from '../../config/mocks/TestData';
 
 describe('async actions', () => {
     afterEach(() => {

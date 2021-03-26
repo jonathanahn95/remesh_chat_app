@@ -1,27 +1,12 @@
 import { createConversation, getAllConversations } from '../../state/Conversations/Conversations-Actions'
 import fetchMock from 'fetch-mock';
 import { mockStore } from '../../config/TestProvider';
-
-const conversation = {
-    id: '1',
-    type: 'conversation',
-    attributes: {
-        title: 'General'
-    },
-    relationships: {
-        messages: [
-            {id: 1, type: 'message'}
-        ]
-    }
-}
-
-
+import { conversation } from '../../config/mocks/TestData';
 
 describe('The ConversationList Component', () => {
   afterEach(() => {
     fetchMock.restore()
   })
-
  
   it('creates a conversation', () => {
     fetchMock.postOnce('/api/v1/conversations', conversation)

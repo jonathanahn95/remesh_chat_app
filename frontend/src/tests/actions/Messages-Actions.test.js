@@ -1,22 +1,8 @@
-import { createMessage, getAllMessagesForConversation, getSingleMessage } from '../../state/Messages/Messages-Actions';
-import { CREATE_MESSAGE_SUCCESS, GET_ALL_MESSAGES_FOR_CONVERSATION_SUCCESS, GET_SINGLE_MESSAGE_SUCCESS } from '../../state/Messages/Messages-ActionTypes';
+import { createMessage, getAllMessagesForConversation } from '../../state/Messages/Messages-Actions';
+import { GET_ALL_MESSAGES_FOR_CONVERSATION_SUCCESS } from '../../state/Messages/Messages-ActionTypes';
 import fetchMock from 'fetch-mock'
 import { mockStore } from '../../config/TestProvider';
-
-
-const message = {
-    id: '1',
-    type: 'message',
-    attributes: {
-        text: 'asd'
-    },
-    relationships: {
-        thoughts: [
-            {id: 1, type: 'thought'}
-        ]
-    }
-}
-
+import { message } from '../../config/mocks/TestData';
 
 describe('async actions', () => {
     afterEach(() => {
