@@ -111,9 +111,7 @@ class Thoughts extends React.Component {
         <div className={classes.thought}>
           {date}
           <div className={classes.thought}>
-            <div>
-              {message.attributes.text}
-            </div>
+            {message.attributes.text}
           </div>
         </div>
       ) : (

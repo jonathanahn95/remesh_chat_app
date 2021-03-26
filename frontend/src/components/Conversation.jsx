@@ -25,14 +25,11 @@ const styles = (theme) => {
     };
   };
   
-const Conversation = (props) => {
-    const { conversation, classes, handleConversationChange } = props;
-    return (
-        <div onClick={() => handleConversationChange(conversation.id)} className={classes.section}>
-            <div>#{conversation.attributes.title.toUpperCase()}</div>
-        </div>
-    )
-}
+const Conversation = ({ conversation, classes, handleConversationChange }) => (
+  <div onClick={() => handleConversationChange(conversation.id)} className={classes.section}>
+      #{conversation.attributes.title.toUpperCase()}
+  </div>
+)
 
 
 export default withStyles(styles)(memo(Conversation));

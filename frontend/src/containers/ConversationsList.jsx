@@ -89,8 +89,7 @@ class ConversationsList extends React.Component {
         this.setState({ title: e.target.value });
     }
 
-    handleSubmit = (e) => {
-      e.preventDefault();
+    handleSubmit() {
       this.props.createConversation(this.state)
       this.setState({ title: ''});
     }
@@ -108,7 +107,7 @@ class ConversationsList extends React.Component {
             ))
           ) : (
             <div>
-              <p>No Conversations Found.</p>
+              No Conversations Found.
             </div>
           );
 

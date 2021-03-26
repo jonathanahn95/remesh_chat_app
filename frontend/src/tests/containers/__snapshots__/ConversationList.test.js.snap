@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The ConversationList Component should render with given state from Redux store 1`] = `
+<div
+  className="ConversationsList-root-1"
+>
+  <h1>
+    Channels:
+  </h1>
+  <form
+    className="ConversationsList-form-4"
+    onSubmit={[Function]}
+  >
+    <div
+      className="ConversationsList-formSection-5"
+    >
+      <div
+        className="ConversationsList-formTitle-7"
+      >
+        Add A Conversation:
+      </div>
+      <div
+        className="ConversationsList-buttonSection-6"
+      >
+        <input
+          onChange={[Function]}
+          placeholder="Enter a title"
+          value=""
+        />
+        <button
+          className="ConversationsList-button-8"
+          role="submit"
+        >
+          Create Conversation
+        </button>
+      </div>
+    </div>
+  </form>
+  <div>
+    No Conversations Found.
+  </div>
+</div>
+`;

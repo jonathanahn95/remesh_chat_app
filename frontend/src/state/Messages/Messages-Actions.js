@@ -11,7 +11,6 @@ const setCreateMessage = payload => {
 };
 
 const getMessages = payload => {
-  console.log(payload, 'msg')
   return {
     type: FETCH_MESSAGES,
     payload

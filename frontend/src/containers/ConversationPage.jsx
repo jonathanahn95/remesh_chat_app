@@ -65,7 +65,6 @@ class ConversationPage extends React.Component {
       }
     }
 
-
     handleInputChange = (e) => {
       this.setState({ text: e.target.value });
     }

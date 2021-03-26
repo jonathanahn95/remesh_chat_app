@@ -1,5 +1,4 @@
-import React from 'react';
-import { connect } from "react-redux";
+import React, { memo } from 'react';
 import { Link } from "react-router-dom";
 import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
@@ -37,9 +36,7 @@ const styles = (theme) => ({
     },
   });
 
-const Header = (props) => {
-    const { classes } = props;
-    return (
+const Header = ({ classes }) => (
       <header className={classes.root}>
           <Link to='/'>
             <div className={classNames(classes.back, { [classes.hideBackButton]: false })}>
@@ -48,8 +45,7 @@ const Header = (props) => {
           </Link>
           <Search />
       </header>
-    )
-  };
+);
 
   
-  export default connect(null, null)(withStyles(styles)(Header));
+  export default withStyles(styles)(memo(Header));

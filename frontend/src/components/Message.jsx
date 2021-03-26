@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
+import { getTimeAndDate } from '../utils/helper'
 
 const styles = (theme) => {
     return {
@@ -44,38 +45,27 @@ const styles = (theme) => {
     };
   };
   
-const Conversation = (props) => {
-    const { classes, message, conversationId } = props;
-    const dateObj = message.attributes ? new Date(message.attributes.created_at) : ''
-    const date = message.attributes ? `
-    ${dateObj.getMonth() + 1}/${dateObj.getDate()}/${dateObj.getFullYear()} - ${(dateObj.getHours() + 24) % 12 || 12}:${(dateObj.getMinutes() < 10 ? '0' : '') + (dateObj.getMinutes())}` : ''
-
-    return (
-        <div className={classes.messageWrapper}>
-            <div>
-                {date}
-            </div>
-            <div className={classes.messageSection} key={message.id}>
-                <div>
-                {message.attributes.text}
-                </div>
-            </div>
-            <div className={classes.thoughtsSection}>
-              <div>
-                Has {message.relationships.thoughts.data.length} thoughts
-              </div>
-              <Link to={`/conversation/${conversationId}/messages/${message.id}`}>
-                <div>
-                  View all thoughts
-                </div>
-              </Link>
-              <div>
-                  Add a thought
-              </div>
-            </div>
+const Conversation = ({ classes, message, conversationId }) => (
+  <div className={classes.messageWrapper}>
+      <div>
+          {getTimeAndDate(message)}
+      </div>
+      <div className={classes.messageSection} key={message.id}>
+        {message.attributes.text}
+      </div>
+      <div className={classes.thoughtsSection}>
+        <div>
+          Has {message.relationships.thoughts.data.length} thoughts
         </div>
-    )
-}
+        <Link to={`/conversation/${conversationId}/messages/${message.id}`}>
+            View all thoughts
+        </Link>
+        <div>
+          Add a thought
+        </div>
+      </div>
+  </div>
+);
 
 
 export default withStyles(styles)(memo(Conversation));

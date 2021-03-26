@@ -1,19 +1,7 @@
 import { fetchConversation, getConversationsRequest, createConversation } from '../../state/Conversations/Conversations-Actions';
-import { SET_CREATED_CONVERSATION_REQUEST, FETCH_CONVERSATION, SET_CONVERSATIONS_REQUESTS } from '../../state/Conversations/Conversations-ActionTypes';
-
-import configureMockStore from 'redux-mock-store';
-import thunkMiddleWare from 'redux-thunk';
-const nock = require('nock')
-const scope = nock('http://localhost:3000')
-  .get('/api/v1/conversations')
-  .reply(200, {
-      results: {
-          id: '123'
-      }
-})
-
-
-const mockStore = configureMockStore([thunkMiddleWare])
+import { FETCH_CONVERSATION, SET_CONVERSATIONS_REQUESTS } from '../../state/Conversations/Conversations-ActionTypes';
+import fetchMock from 'fetch-mock';
+import { mockStore } from '../../config/TestProvider';
 
 const conversation = {
     id: '1',
@@ -28,16 +16,50 @@ const conversation = {
     }
 }
 
-it('should dispatch an action to fetch all conversations', () => {
-    const store = mockStore();
-    return store.dispatch(getConversationsRequest())
-    .then(() => {
-        const action = store.getActions();
-        const expectedAction = {
-            type: SET_CONVERSATIONS_REQUESTS
-        }
-
-        expect(action[0]).toEqual(expectedAction)
-
+describe('async actions', () => {
+    afterEach(() => {
+      fetchMock.restore()
     })
-})
+  
+    it('should dispatch setConversationsRequest', () => {
+      fetchMock.getOnce('/api/v1/conversations', {
+        body: { conversations: [conversation] },
+        headers: { 'content-type': 'application/json' }
+      })
+  
+      const expectedActions = [
+        { type: SET_CONVERSATIONS_REQUESTS, payload: { conversations: [conversation] } }
+      ]
+      const store = mockStore({ conversations: [] })
+  
+      return store.dispatch(getConversationsRequest()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+    })
+
+    it('should dispatch fetchConversationRequest', () => {
+      fetchMock.getOnce('/api/v1/conversations/1', {
+        body: { conversations: conversation },
+        headers: { 'content-type': 'application/json' }
+      })
+  
+      const expectedActions = [
+        { type: FETCH_CONVERSATION, payload: { conversations: conversation } }
+      ]
+      const store = mockStore({ conversations: [] })
+  
+      return store.dispatch(fetchConversation(1)).then(() => {
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+    })
+
+    it('should dispatch createConversation', () => {
+      fetchMock.postOnce('/api/v1/conversations', conversation)
+      const store = mockStore({ conversations: conversation })
+  
+      return store.dispatch(createConversation()).then(() => {
+        expect(fetchMock.called('/api/v1/conversations')).toBe(true);
+      });
+    })
+  })
+
