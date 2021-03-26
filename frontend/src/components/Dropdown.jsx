@@ -12,23 +12,25 @@ const styles = (theme) => {
         border: '1px solid #ccc',
         padding: '20px 10px',
         borderRadius: '5px',
-        margin: '20px',
         cursor: 'pointer',
         '&:hover': {
           backgroundColor: '#65388b',
           color: 'white',
           cursor: 'pointer'
         },
-        width: '80%',
+        backgroundColor: 'white',
+        margin: '5px'
       },
     };
   };
   
-const Conversation = ({ conversation, classes, handleConversationChange }) => (
-  <div onClick={() => handleConversationChange(conversation.id)} className={classes.section}>
-      #{conversation.attributes.title.toUpperCase()}
-  </div>
-)
+const Dropdown = ({ result, classes }) => {
+    return (
+        <div className={classes.section}>
+            {result.attributes.title}
+        </div>
+      )
+}
 
 
-export default withStyles(styles)(memo(Conversation));
+export default withStyles(styles)(memo(Dropdown));

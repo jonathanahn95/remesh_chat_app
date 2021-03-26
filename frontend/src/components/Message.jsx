@@ -6,7 +6,6 @@ import { getTimeAndDate } from '../utils/helper'
 const styles = (theme) => {
     return {
       root: {
-        maxWidth: '980px',
         margin: 'auto', 
       },
       section: {

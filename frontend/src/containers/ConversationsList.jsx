@@ -11,7 +11,9 @@ const styles = (theme) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '25%'
+        width: '25%',
+        maxHeight: '700px',
+        overflow: 'scroll',
       },
       section: {
           display: 'flex',

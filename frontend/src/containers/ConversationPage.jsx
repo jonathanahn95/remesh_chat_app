@@ -13,7 +13,9 @@ const styles = (theme) => {
         alignItems: 'center',
         width: '80%',
         justifyContent: 'end',
-        border: '1px solid black'
+        border: '1px solid black',
+        maxHeight: '700px',
+        overflow: 'scroll',
       },
       section: {
           display: 'flex',
@@ -36,7 +38,7 @@ const styles = (theme) => {
       conversationWrapper: {
         width: '100%',
         textAlign: 'center',
-      }
+      },
     };
   };
 
@@ -45,7 +47,6 @@ class ConversationPage extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        text: '',
         conversationId: this.props.channelSelected
       }
     }
@@ -65,15 +66,6 @@ class ConversationPage extends React.Component {
       }
     }
 
-    handleInputChange = (e) => {
-      this.setState({ text: e.target.value });
-    }
-
-    handleSubmit = (e) => {
-      e.preventDefault();
-      this.props.createMessage(this.state)
-      this.setState({text: ''})
-    }
 
     render() {
         const { messages, conversation, classes } = this.props;
@@ -100,10 +92,6 @@ class ConversationPage extends React.Component {
         return (
             <div className={classes.root}>
               {content}
-              <form onSubmit={(e) => this.handleSubmit(e)}>
-                 <input onChange={(e) => this.handleInputChange(e)} placeholder="Enter message" value={this.state.text}/>
-                 <button role="submit">Send</button>
-               </form>
             </div>
         )
     }

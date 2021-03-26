@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_054703) do
+ActiveRecord::Schema.define(version: 2021_03_24_183803) do
 
   create_table "conversations", force: :cascade do |t|
     t.string "title", null: false
@@ -30,13 +30,13 @@ ActiveRecord::Schema.define(version: 2021_03_25_054703) do
 
   create_table "thoughts", force: :cascade do |t|
     t.text "text"
-    t.integer "Message_id", null: false
+    t.integer "message_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["Message_id"], name: "index_thoughts_on_Message_id"
+    t.index ["message_id"], name: "index_thoughts_on_message_id"
     t.index ["text"], name: "index_thoughts_on_text"
   end
 
   add_foreign_key "messages", "conversations"
-  add_foreign_key "thoughts", "Messages"
+  add_foreign_key "thoughts", "messages"
 end

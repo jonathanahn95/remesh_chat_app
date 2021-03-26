@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import Search from '../containers/Search'
 const styles = (theme) => ({
     root: {
-        display: 'flex',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
-        padding: '10px',
-        margin: '10px 0',
-        justifyContent: 'space-between',
+      display: 'flex',
+      margin: '20px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      padding: '10px',
+      justifyContent: 'space-evenly',
     },
     back: {
       color: 'white',

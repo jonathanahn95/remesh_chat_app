@@ -6,16 +6,16 @@
 #  text       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  Message_id :integer          not null
+#  message_id :integer          not null
 #
 # Indexes
 #
-#  index_thoughts_on_Message_id  (Message_id)
+#  index_thoughts_on_message_id  (message_id)
 #  index_thoughts_on_text        (text)
 #
 # Foreign Keys
 #
-#  Message_id  (Message_id => Messages.id)
+#  message_id  (message_id => messages.id)
 #
 require 'rails_helper'
 
@@ -25,6 +25,6 @@ RSpec.describe Thought, type: :model do
   end
 
   describe 'associations' do
-    it { should belong_to(:Message) }
+    it { should belong_to(:message) }
   end
 end

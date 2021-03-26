@@ -21,17 +21,21 @@ class Api::V1::ConversationsController < ApplicationController
     end
 
     def search
-      # conversations = Conversation.includes(:messages).where('title LIKE ?', "%#{params[:search]}%")
       conversations = Conversation.includes(:messages).where('title = ?', params[:search])
       render json: ConversationSerializer.new(conversations).serialized_json
+    end
+
+    def dropdown
+      if params[:search] == ""
+        render json:  Conversation.where('id = ?', -1)
+      else
+        conversations = Conversation.includes(:messages).where('title LIKE ?', "%#{params[:search]}%")
+        render json: ConversationSerializer.new(conversations).serialized_json
+      end
     end
   
     private
     def conversation_params
       params.require(:conversation).permit(:title)
     end
-
-  #   def options
-  #     @option ||= { include: %i[messages] }
-  # end
 end

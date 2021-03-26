@@ -138,7 +138,7 @@ class Thoughts extends React.Component {
                 </div>
               </div>
             </div>
-             <form className={classes.form} onSubmit={(e) => this.handleSubmit(e)}>
+             <form onSubmit={(e) => this.handleSubmit(e)}>
              <div className={classes.formSection}>
                <div className={classes.formTitle}>
                    Add A Thought:
