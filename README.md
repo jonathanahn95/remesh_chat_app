@@ -1,5 +1,10 @@
 # README
 
+*A gem, mimemagic, had a licensing issue and needed to yank all of its old (illegal) versions and relicense.*
+*If you aren't able to bundle install due to this reason, try these steps*
+* - brew install shared-mime-info
+* - bundle update nokogiri marcel mimemagic
+
 To run the project - 
 
 1. Clone this repo
