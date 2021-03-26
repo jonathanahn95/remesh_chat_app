@@ -14,5 +14,5 @@ To run the project -
 5. in front end diretory - cd frontend && npm install
 6. one terminal run cmd in repo directory - rails s 
 7. another terminal run cmd in frontend directory - npm start
-8. to run backend tests run cmd in report directory - bundle exec rspec
+8. to run backend tests run cmd in repo directory - bundle exec rspec
 9. to run frontend tests run cmd in frontend directory - npm test
