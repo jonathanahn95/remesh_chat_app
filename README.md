@@ -11,7 +11,7 @@ To run the project -
 2. git checkout master
 3. bundle install
 4. npm install
-5. one terminal run cmd - rails s 
-6. another terminal run cmd - npm start
-7. to run backend tests run cmd - bundle exec rspec
-8. to run frontend tests run cmd - npm test
+5. one terminal run cmd in repo directory - rails s 
+6. another terminal run cmd in frontend directory - npm start
+7. to run backend tests run cmd in report directory - bundle exec rspec
+8. to run frontend tests run cmd in frontend directory - npm test
