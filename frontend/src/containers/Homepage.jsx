@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ConversationsList from "./ConversationsList";
 import ConversationPage from "./ConversationPage";
 import { createMessage } from "../state/Messages/Messages-Actions";
-
+import Search from './Search'
 const styles = (theme) => {
     return {
       root: {
@@ -63,7 +63,7 @@ class Homepage extends React.Component {
       super(props);
       this.state = { 
         search: '',
-        channelSelected: 1,
+        channelSelected: this.props.conversationId,
         text: '',
       };
     }
@@ -88,9 +88,10 @@ class Homepage extends React.Component {
 
 
     render() {
-      const {  classes } = this.props;
+      const {  classes, conversationId } = this.props;
       return (
         <div className={classes.root}>
+            <Search />
             <div className={classes.chatSection}>
               <div className={classes.chatFormSection}>
                 <ConversationsList channelSelected={this.state.channelSelected} handleConversationChange={this.handleConversationChange} />
@@ -111,9 +112,9 @@ class Homepage extends React.Component {
       }
 }
 
-const mapStateToProps = (props) => {
+const mapStateToProps = ({ conversationsReducer }) => {
   return {
-    conversationId: props.conversationsReducer.conversation.id
+    conversationId: conversationsReducer.conversation.id || 1
   };
 };
 

@@ -24,7 +24,6 @@ const styles = (theme) => {
       },
       messageSection: {
         border: '1px solid #ccc',
-        cursor: 'pointer',
         display: 'flex',
         padding: '20px 10px',
         borderRadius: '5px',
@@ -40,11 +39,36 @@ const styles = (theme) => {
       },
       thoughtsSection: {
         display: 'flex',
+      },
+      thoughtSection: {
+        border: '1px solid #ccc',
+        margin: '2px',
+        display: 'flex',
+        padding: '10px 5px',
+        borderRadius: '5px',
+        justifyContent: 'center',
+      },
+      thoughtClickable: {
+        border: '1px solid #ccc',
+        margin: '2px',
+        cursor: 'pointer',
+        display: 'flex',
+        padding: '10px 5px',
+        borderRadius: '5px',
+        justifyContent: 'center',
+        textDecoration: 'none',
+        backgroundColor: '#65388b',
+        color: 'white',
+        '&:hover': {
+          backgroundColor: 'white',
+          color: '#65388b',
+          cursor: 'pointer'
+        },
       }
     };
   };
   
-const Conversation = ({ classes, message, conversationId }) => (
+const Message = ({ classes, message, conversationId }) => (
   <div className={classes.messageWrapper}>
       <div>
           {getTimeAndDate(message)}
@@ -53,18 +77,18 @@ const Conversation = ({ classes, message, conversationId }) => (
         {message.attributes.text}
       </div>
       <div className={classes.thoughtsSection}>
-        <div>
+        <div className={classes.thoughtSection}>
           Has {message.relationships.thoughts.data.length} thoughts
         </div>
-        <Link to={`/conversation/${conversationId}/messages/${message.id}`}>
+        <Link className={classes.thoughtClickable} to={`/conversation/${conversationId}/messages/${message.id}`}>
             View all thoughts
         </Link>
-        <div>
+        <Link className={classes.thoughtClickable} to={`/conversation/${conversationId}/messages/${message.id}`}>
           Add a thought
-        </div>
+        </Link>
       </div>
   </div>
 );
 
 
-export default withStyles(styles)(memo(Conversation));
+export default withStyles(styles)(memo(Message));

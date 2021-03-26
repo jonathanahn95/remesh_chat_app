@@ -1,4 +1,4 @@
-import { FETCH_THOUGHTS, CREATE_THOUGHT } from '../../state/Thoughts/Thoughts-ActionTypes';
+import { GET_ALL_THOUGHTS_FOR_MESSAGE_SUCCESS, CREATE_THOUGHT_SUCCESS } from '../../state/Thoughts/Thoughts-ActionTypes';
 import thoughtsReducer from '../../state/Thoughts/Thoughts-Reducer'
 
 
@@ -22,9 +22,9 @@ describe('thoughtsReducer', () => {
     })
 
 
-    it('should handle FETCH_THOUGHTS', () => {
+    it('should handle GET_ALL_THOUGHTS_FOR_MESSAGE_SUCCESS', () => {
         const newState = thoughtsReducer(initialState, {
-            type: FETCH_THOUGHTS,
+            type: GET_ALL_THOUGHTS_FOR_MESSAGE_SUCCESS,
             payload: {
                 data: thought
             }
@@ -37,9 +37,9 @@ describe('thoughtsReducer', () => {
 
     })
 
-    it('should handle CREATE_THOUGHT', () => {
+    it('should handle CREATE_THOUGHT_SUCCESS', () => {
         const newState = thoughtsReducer(initialState, {
-            type: CREATE_THOUGHT,
+            type: CREATE_THOUGHT_SUCCESS,
             payload: {
                 data: {
                     id: '1',

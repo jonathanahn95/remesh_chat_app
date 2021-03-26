@@ -1,4 +1,4 @@
-export async function fetchThoughts(id) {
+export async function getAllThoughtsForMessage(id) {
     return await fetch(`/api/v1/messages/${id}/thoughts`)
     .then(response => response.json())
     .catch((error) => {

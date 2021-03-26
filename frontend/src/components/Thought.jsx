@@ -23,7 +23,6 @@ const styles = (theme) => {
       },
       thoughtSection: {
         border: '1px solid #ccc',
-        cursor: 'pointer',
         display: 'flex',
         padding: '20px 10px',
         borderRadius: '5px',

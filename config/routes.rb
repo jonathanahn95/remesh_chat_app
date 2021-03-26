@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'conversations/search', to: 'conversations#search'
       get 'conversations/dropdown', to: 'conversations#dropdown'
+      get 'messages/dropdown', to: 'messages#dropdown'
 
       resources :conversations, only: [:create, :index, :show] do
         resources :messages, only: [:index]

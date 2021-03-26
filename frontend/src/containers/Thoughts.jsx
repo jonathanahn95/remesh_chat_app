@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
-import { fetchThoughts, createThought } from "../state/Thoughts/Thoughts-Actions";
-import { fetchMessage } from "../state/Messages/Messages-Actions";
-import Thought from '../components/Thought'
+import { getAllThoughtsForMessage, createThought } from "../state/Thoughts/Thoughts-Actions";
+import { getSingleMessage } from "../state/Messages/Messages-Actions";
+import Thought from '../components/Thought';
+import Button from '../components/Button';
 
 const styles = (theme) => {
     return {
@@ -73,6 +74,13 @@ const styles = (theme) => {
           color: '#65388b',
           cursor: 'pointer'
         },
+      },
+      noThoughts: {
+        textAlign: 'center'
+      },
+      thoughtsSection: {
+        maxHeight: '400px',
+        overflow: 'scroll',
       }
     };
   };
@@ -87,8 +95,8 @@ class Thoughts extends React.Component {
     }
 
     componentDidMount() {
-      this.props.fetchMessage(this.state.messageId);
-      this.props.fetchThoughts(this.state.messageId)
+      this.props.getSingleMessage(this.state.messageId);
+      this.props.getAllThoughtsForMessage(this.state.messageId)
     }
 
     handleInputChange = (e) => {
@@ -101,8 +109,13 @@ class Thoughts extends React.Component {
       this.setState({text: ''})
     }
 
+    onRetry = () => {
+      this.props.getAllThoughtsForMessage(this.state.messageId);
+    };
+
+
     render() {
-      const {  classes, thoughts, message } = this.props;
+      const {  error, classes, thoughts, message } = this.props;
       const dateObj = message.attributes ? new Date(message.attributes.created_at) : ''
       const date = message.attributes ? `
       ${dateObj.getMonth() + 1}/${dateObj.getDate()}/${dateObj.getFullYear()} - ${(dateObj.getHours() + 24) % 12 || 12}:${(dateObj.getMinutes() < 10 ? '0' : '') + (dateObj.getMinutes())} ` : ''
@@ -118,14 +131,27 @@ class Thoughts extends React.Component {
         <h1>No title</h1>
       )
 
-      const content = thoughts.length ? (
+      const content = error && error.length > 0 ? (
+        <div>
+          <p>
+          Error: {error}
+          &nbsp;
+          <button 
+            onClick={this.onRetry}
+          >
+            Click Here To Try Again
+          </button>
+          </p>
+        </div>
+      ) : thoughts.length ? (
         thoughts.map((thought) => <Thought thought={thought} />)
       ) : (
-        <div>No thoughts for this comment</div>
+        <div className={classes.noThoughts}>No thoughts for this comment</div>
       )
 
         return (
           <div className={classes.root}>
+            <Button />
             <div className={classes.thoughtsWrapper}>
               <div className={classes.contentSection}>
                 <div>
@@ -134,7 +160,9 @@ class Thoughts extends React.Component {
                 </div>
                 <div>
                   <h2 className={classes.h2}>Thoughts:</h2>
-                  {content}
+                  <div className={classes.thoughtsSection}>
+                    {content}
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,18 +182,19 @@ class Thoughts extends React.Component {
       }
 }
 
-const mapStateToProps = (props) => {
+const mapStateToProps = ({ messagesReducer, thoughtsReducer }) => {
   return {
-    message: props.messagesReducer.message,
-    thoughts: props.thoughtsReducer.thoughts
+    message: messagesReducer.message,
+    thoughts: thoughtsReducer.thoughts,
+    error: thoughtsReducer.error
   };
 };
 
 const mapDispatchToProps = dispatch => { 
   return {
-    fetchThoughts: (id) => dispatch(fetchThoughts(id)),
+    getAllThoughtsForMessage: (id) => dispatch(getAllThoughtsForMessage(id)),
     createThought: (data) => dispatch(createThought(data)),
-    fetchMessage: (id) => dispatch(fetchMessage(id)),
+    getSingleMessage: (id) => dispatch(getSingleMessage(id)),
   };
 };
 

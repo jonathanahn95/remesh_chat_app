@@ -1,15 +1,4 @@
-export async function createMessage(data) {
-    const rawData = await fetch('/api/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-   
-    const content = await rawData.json()
-    return content;
-  };
-
-export async function fetchMessages(id) {
+export async function getAllMessagesForConversation(id) {
     return await fetch(`/api/v1/conversations/${id}/messages`)
     .then(response => response.json())
     .catch((error) => {
@@ -17,10 +6,7 @@ export async function fetchMessages(id) {
     })
   };
 
-
- 
-
-export async function fetchMessage(id) {
+export async function getSingleMessage(id) {
     return await fetch(`/api/v1/messages/${id}`)
     .then(response => response.json())
     .catch((error) => {

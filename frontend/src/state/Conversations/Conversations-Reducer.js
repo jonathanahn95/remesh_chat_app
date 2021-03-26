@@ -1,4 +1,4 @@
-import { SET_CONVERSATIONS_REQUESTS, SET_CREATED_CONVERSATION_REQUEST, FETCH_CONVERSATION } from './Conversations-ActionTypes';
+import { CREATE_CONVERSATION_FAILURE, GET_ALL_CONVERSATIONS_SUCCESS, CREATE_CONVERSATION_SUCCESS, GET_SINGLE_CONVERSATION_SUCCESS } from './Conversations-ActionTypes';
 
 const INITIAL_STATE = {
     conversations: [],
@@ -8,23 +8,29 @@ const INITIAL_STATE = {
 
 export default function conversationsReducer(state = INITIAL_STATE , action) { 
     switch (action.type) { 
-        case FETCH_CONVERSATION: 
+        case GET_SINGLE_CONVERSATION_SUCCESS: 
             return {
                 ...state,
                 conversation: action.payload.data,
                 error: ""
             }
-        case SET_CONVERSATIONS_REQUESTS: 
+        case GET_ALL_CONVERSATIONS_SUCCESS: 
             return {
                 ...state,
                 conversations: action.payload.data,
                 error: ""
             }
-        case SET_CREATED_CONVERSATION_REQUEST: 
+        case CREATE_CONVERSATION_SUCCESS: 
             return {
                 ...state,
                 conversations: [...state.conversations, action.payload.data],
                 error: ""
+            }
+        case CREATE_CONVERSATION_FAILURE: 
+            return {
+                ...state,
+                conversations: [...state.conversations, action.payload.data],
+                error: action.payload
             }
         default: 
             return state;

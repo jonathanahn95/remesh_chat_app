@@ -21,7 +21,7 @@ class Api::V1::ConversationsController < ApplicationController
     end
 
     def search
-      conversations = Conversation.includes(:messages).where('title = ?', params[:search])
+      conversations = Conversation.includes(:messages).find_by(title: params[:search])
       render json: ConversationSerializer.new(conversations).serialized_json
     end
 

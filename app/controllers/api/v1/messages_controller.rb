@@ -11,8 +11,8 @@ class Api::V1::MessagesController < ApplicationController
     end
   
     def index
-      messages = Message.where( conversation_id: params[:conversation_id])
 
+      messages = Message.includes(:thoughts).where( conversation_id: params[:conversation_id])
       render json: MessageSerializer.new(messages).serialized_json
     end
   
@@ -20,6 +20,15 @@ class Api::V1::MessagesController < ApplicationController
       message = Message.find_by(id: params[:id])
 
       render json: MessageSerializer.new(message).serialized_json
+    end
+
+    def dropdown
+      if params[:search] == ""
+        render json:  Message.where('id = ?', -1)
+      else
+        messages = Message.includes(:thoughts).where('text LIKE ?', "%#{params[:search]}%")
+        render json: MessageSerializer.new(messages).serialized_json
+      end
     end
     
     private

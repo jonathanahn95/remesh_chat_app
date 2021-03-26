@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Message from '../components/Message'
-import { fetchConversation } from "../state/Conversations/Conversations-Actions";
-import { fetchMessages, createMessage } from "../state/Messages/Messages-Actions";
+import { getSingleConversation } from "../state/Conversations/Conversations-Actions";
+import { getAllMessagesForConversation } from "../state/Messages/Messages-Actions";
 
 const styles = (theme) => {
     return {
@@ -14,7 +14,7 @@ const styles = (theme) => {
         width: '80%',
         justifyContent: 'end',
         border: '1px solid black',
-        maxHeight: '700px',
+        maxHeight: '650px',
         overflow: 'scroll',
       },
       section: {
@@ -27,9 +27,7 @@ const styles = (theme) => {
         fontSize: '40px'
       },
       messageSection: {
-        border: '1px solid #ccc',
         margin: '20px',
-        cursor: 'pointer',
         display: 'flex',
         padding: '20px 10px',
         borderRadius: '5px',
@@ -52,30 +50,47 @@ class ConversationPage extends React.Component {
     }
 
     componentDidMount() {
-      this.props.fetchConversation(this.props.channelSelected);
-      this.props.fetchMessages(this.props.channelSelected);
+      const { channelSelected } = this.props;
+      this.props.getSingleConversation(channelSelected);
+      this.props.getAllMessagesForConversation(channelSelected);
     }
 
     componentWillReceiveProps(nextProps) {
       if (this.props.channelSelected !== nextProps.channelSelected) {
-        this.props.fetchConversation(nextProps.channelSelected);
-        this.props.fetchMessages(nextProps.channelSelected);
+        this.props.getSingleConversation(nextProps.channelSelected);
+        this.props.getAllMessagesForConversation(nextProps.channelSelected);
         this.setState({
           conversationId: nextProps.channelSelected
         })
       }
     }
 
+    onRetry = () => {
+      this.props.getAllMessagesForConversation(this.props.channelSelected);
+    };
+
 
     render() {
-        const { messages, conversation, classes } = this.props;
+        const { error, messages, conversation, classes } = this.props;
 
         const content = conversation.attributes ? (
          <div className={classes.conversationWrapper}>
            <h1 className={classes.conversationName}>
             #{conversation.attributes.title.toUpperCase()}
            </h1>
-           {messages.length ? (
+           {error && error.length > 0 ? (
+          <div>
+            <p>
+            Error: {error}
+            &nbsp;
+            <button 
+              onClick={this.onRetry}
+            >
+              Click Here To Try Again
+            </button>
+            </p>
+          </div>
+        ) : messages.length ? (
              messages.map((msg) => (
                <Message message={msg} conversationId={conversation.id}/>
              ))
@@ -88,7 +103,7 @@ class ConversationPage extends React.Component {
             <p>There is no conversation.</p>
           </div>
         );
-  
+
         return (
             <div className={classes.root}>
               {content}
@@ -98,18 +113,18 @@ class ConversationPage extends React.Component {
 }
   
 
-const mapStateToProps = (props) => {
+const mapStateToProps = ({ conversationsReducer, messagesReducer}) => {
     return {
-      conversation: props.conversationsReducer.conversation,
-      messages: props.messagesReducer.messages
+      conversation: conversationsReducer.conversation,
+      messages: messagesReducer.messages,
+      error: messagesReducer.error
     };
   };
   
   const mapDispatchToProps = dispatch => { 
     return {
-      fetchConversation: (id) => dispatch(fetchConversation(id)),
-      fetchMessages: (id) => dispatch(fetchMessages(id)),
-      createMessage: (data) => dispatch(createMessage(data)),
+      getSingleConversation: (id) => dispatch(getSingleConversation(id)),
+      getAllMessagesForConversation: (id) => dispatch(getAllMessagesForConversation(id)),
     };
   };
   

@@ -1,4 +1,4 @@
-import { CREATE_MESSAGE, FETCH_MESSAGES, FETCH_MESSAGE } from '../../state/Messages/Messages-ActionTypes';
+import { CREATE_MESSAGE_SUCCESS, GET_ALL_MESSAGES_FOR_CONVERSATION_SUCCESS, GET_SINGLE_MESSAGE_SUCCESS } from '../../state/Messages/Messages-ActionTypes';
 import messagesReducer from '../../state/Messages/Messages-Reducer'
 
 
@@ -28,9 +28,9 @@ describe('messagesReducer', () => {
     })
 
 
-    it('should handle FETCH_MESSAGE', () => {
+    it('should handle GET_SINGLE_MESSAGE_SUCCESS', () => {
         const newState = messagesReducer(initialState, {
-            type: FETCH_MESSAGE,
+            type: GET_SINGLE_MESSAGE_SUCCESS,
             payload: {
                 data: message
             }
@@ -44,9 +44,9 @@ describe('messagesReducer', () => {
 
     })
 
-    it('should handle CREATE_MESSAGE', () => {
+    it('should handle CREATE_MESSAGE_SUCCESS', () => {
         const newState = messagesReducer(initialState, {
-            type: CREATE_MESSAGE,
+            type: CREATE_MESSAGE_SUCCESS,
             payload: {
                 data: {
                     id: '1',
@@ -71,9 +71,9 @@ describe('messagesReducer', () => {
 
     })
 
-    it('should handle FETCH_MESSAGES', () => {
+    it('should handle GET_ALL_MESSAGES_FOR_CONVERSATION_SUCCESS', () => {
         const newState = messagesReducer(initialState, {
-            type: FETCH_MESSAGES,
+            type: GET_ALL_MESSAGES_FOR_CONVERSATION_SUCCESS,
             payload: {
                 data: [{
                     id: '1',

@@ -1,49 +1,70 @@
-import { SET_CONVERSATIONS_REQUESTS, SET_CREATED_CONVERSATION_REQUEST, FETCH_CONVERSATION } from './Conversations-ActionTypes'
+import { GET_ALL_CONVERSATIONS_SUCCESS, CREATE_CONVERSATION_SUCCESS, GET_SINGLE_CONVERSATION_SUCCESS, CREATE_CONVERSATION_FAILURE } from './Conversations-ActionTypes'
 import * as ConversationApi from "./Conversations-Api";
 
 
 
-const fetchConversationRequest = payload => {
+export const setSingleConversation = payload => {
     return {
-      type: FETCH_CONVERSATION,
+      type: GET_SINGLE_CONVERSATION_SUCCESS,
       payload
     };
 };
 
-const setConversationsRequest = payload => {
+const setAllConversations = payload => {
     return {
-      type: SET_CONVERSATIONS_REQUESTS,
+      type: GET_ALL_CONVERSATIONS_SUCCESS,
       payload
     };
 };
 
 const setCreatedConversation = payload => {
     return {
-      type: SET_CREATED_CONVERSATION_REQUEST,
+      type: CREATE_CONVERSATION_SUCCESS,
       payload
     };
 };
 
-export const fetchConversation = (id) => {
+const setCreatedConversationFailure = payload => {
+    return {
+      type: CREATE_CONVERSATION_FAILURE,
+      payload
+    };
+};
+
+export const getSingleConversation = (id) => {
   return dispatch => {
-    return ConversationApi.fetchConversation(id).then(conversation => {
-      return dispatch(fetchConversationRequest(conversation));
+    return ConversationApi.getSingleConversation(id).then(conversation => {
+      return dispatch(setSingleConversation(conversation));
     });
   };
 };
 
-export const getConversationsRequest = () => {
+export const getAllConversations = () => {
   return dispatch => {
-    return ConversationApi.getConversationsRequest().then(conversations => {
-      return dispatch(setConversationsRequest(conversations));
+    return ConversationApi.getAllConversations().then(conversations => {
+      return dispatch(setAllConversations(conversations));
     });
   };
 };
 
-export const createConversation = (data) => {
-  return dispatch => {
-    return ConversationApi.createConversation(data).then(conversation => {
-      return dispatch(setCreatedConversation(conversation));
+
+export const createConversation = (data) => async (dispatch) => {
+  let obj = data
+  try {
+    const response = await fetch('/api/v1/conversations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(obj)
     });
-  };
+    const res = await response
+    const jsonRes = await response.json()
+    if (res.status === 200) {
+
+      dispatch(setCreatedConversation(jsonRes))
+    } else {
+      dispatch(setCreatedConversationFailure(res.error))
+    }
+  } catch (e) {
+    dispatch(setCreatedConversationFailure(e.message))
+  }
 };

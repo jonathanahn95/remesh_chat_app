@@ -1,4 +1,4 @@
-import { SET_CREATED_CONVERSATION_REQUEST, FETCH_CONVERSATION, SET_CONVERSATIONS_REQUESTS } from '../../state/Conversations/Conversations-ActionTypes';
+import { CREATE_CONVERSATION_SUCCESS, GET_SINGLE_CONVERSATION_SUCCESS, GET_ALL_CONVERSATIONS_SUCCESS } from '../../state/Conversations/Conversations-ActionTypes';
 import conversationReducer from '../../state/Conversations/Conversations-Reducer'
 
 
@@ -27,9 +27,9 @@ describe('conversationReducer', () => {
     })
 
 
-    it('should handle FETCH_CONVERSATION', () => {
+    it('should handle GET_SINGLE_CONVERSATION_SUCCESS', () => {
         const newState = conversationReducer(initialState, {
-            type: FETCH_CONVERSATION,
+            type: GET_SINGLE_CONVERSATION_SUCCESS,
             payload: {
                 data: {
                     id: '1',
@@ -54,9 +54,9 @@ describe('conversationReducer', () => {
 
     })
 
-    it('should handle SET_CONVERSATIONS_REQUESTS', () => {
+    it('should handle GET_ALL_CONVERSATIONS_SUCCESS', () => {
         const newState = conversationReducer(initialState, {
-            type: SET_CONVERSATIONS_REQUESTS,
+            type: GET_ALL_CONVERSATIONS_SUCCESS,
             payload: {
                 data: [{
                     id: '1',
@@ -81,9 +81,9 @@ describe('conversationReducer', () => {
 
     })
 
-    it('should handle SET_CREATED_CONVERSATION_REQUEST', () => {
+    it('should handle CREATE_CONVERSATION_SUCCESS', () => {
         const newState = conversationReducer(initialState, {
-            type: SET_CREATED_CONVERSATION_REQUEST,
+            type: CREATE_CONVERSATION_SUCCESS,
             payload: {
                 data: {
                     id: '1',

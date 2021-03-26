@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import Conversation from '../components/Conversation'
-import { getConversationsRequest, createConversation } from "../state/Conversations/Conversations-Actions";
+import { getAllConversations, createConversation } from "../state/Conversations/Conversations-Actions";
 
 const styles = (theme) => {
     return {
@@ -12,7 +12,7 @@ const styles = (theme) => {
         flexDirection: 'column',
         alignItems: 'center',
         width: '25%',
-        maxHeight: '700px',
+        maxHeight: '650px',
         overflow: 'scroll',
       },
       section: {
@@ -84,7 +84,7 @@ class ConversationsList extends React.Component {
     }
 
     componentDidMount() { 
-        this.props.getConversationsRequest();
+        this.props.getAllConversations();
     }
 
     handleInputChange = (e) => {
@@ -96,11 +96,27 @@ class ConversationsList extends React.Component {
       this.setState({ title: ''});
     }
 
+    onRetry = () => {
+      this.props.getAllConversations();
+    };
+
     render() {
-        const { conversations, classes, channelSelected, handleConversationChange } = this.props;
-        const content = conversations.length ? (
+        const { error, conversations, classes, channelSelected, handleConversationChange } = this.props;
+          const content = error && error.length > 0 ? (
+            <div>
+              <p>
+              Error: Unable to create conversation. 
+              &nbsp;
+              <button 
+                onClick={this.onRetry}
+              >
+                Click Here To Try Again
+              </button>
+              </p>
+            </div>
+          ) : conversations.length ? (
             conversations.map((conversation) => (
-               <Conversation 
+                <Conversation 
                 key={conversation.id} 
                 conversation={conversation} 
                 channelSelected={channelSelected} 
@@ -111,8 +127,8 @@ class ConversationsList extends React.Component {
             <div>
               No Conversations Found.
             </div>
-          );
-
+          )
+          
         return (
             <div className={classes.root}>
               <h1>
@@ -139,13 +155,14 @@ class ConversationsList extends React.Component {
 
 const mapStateToProps = ({conversationsReducer}) => {
     return {
-        conversations: conversationsReducer.conversations
+        conversations: conversationsReducer.conversations,
+        error: conversationsReducer.error
     };
   };
   
   const mapDispatchToProps = dispatch => { 
     return {
-        getConversationsRequest: () => dispatch(getConversationsRequest()),
+        getAllConversations: () => dispatch(getAllConversations()),
         createConversation: (data) => dispatch(createConversation(data)),
     };
   };

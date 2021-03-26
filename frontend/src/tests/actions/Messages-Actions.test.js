@@ -1,5 +1,5 @@
-import { createMessage, fetchMessages, fetchMessage } from '../../state/Messages/Messages-Actions';
-import { CREATE_MESSAGE, FETCH_MESSAGES, FETCH_MESSAGE } from '../../state/Messages/Messages-ActionTypes';
+import { createMessage, getAllMessagesForConversation, getSingleMessage } from '../../state/Messages/Messages-Actions';
+import { CREATE_MESSAGE_SUCCESS, GET_ALL_MESSAGES_FOR_CONVERSATION_SUCCESS, GET_SINGLE_MESSAGE_SUCCESS } from '../../state/Messages/Messages-ActionTypes';
 import fetchMock from 'fetch-mock'
 import { mockStore } from '../../config/TestProvider';
 
@@ -23,18 +23,18 @@ describe('async actions', () => {
       fetchMock.restore()
     })
   
-    it('should dispatch fetchMessages', () => {
+    it('should dispatch getAllMessagesForConversation', () => {
         fetchMock.getOnce('/api/v1/conversations/1/messages', {
           body: { messages: [message] },
           headers: { 'content-type': 'application/json' }
         })
     
         const expectedActions = [
-          { type: FETCH_MESSAGES, payload: { messages: [message] } }
+          { type: GET_ALL_MESSAGES_FOR_CONVERSATION_SUCCESS, payload: { messages: [message] } }
         ]
         const store = mockStore({ messages: [] })
     
-        return store.dispatch(fetchMessages(1)).then(() => {
+        return store.dispatch(getAllMessagesForConversation(1)).then(() => {
           expect(store.getActions()).toEqual(expectedActions)
         })
       })

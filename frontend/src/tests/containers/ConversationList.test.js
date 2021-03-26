@@ -1,15 +1,6 @@
-import { shallow, mount } from 'enzyme';
-import { render } from '@testing-library/react';
-import React from 'react';
-import ConversationList from '../../containers/ConversationsList';
-import TestProvider from '../../utils/index';
-import configureMockStore from 'redux-mock-store';
-import thunkMiddleWare from 'redux-thunk';
-import renderer from 'react-test-renderer';
-import { createConversation } from '../../state/Conversations/Conversations-Actions'
-
-
-const mockStore = configureMockStore([thunkMiddleWare])
+import { createConversation, getAllConversations } from '../../state/Conversations/Conversations-Actions'
+import fetchMock from 'fetch-mock';
+import { mockStore } from '../../config/TestProvider';
 
 const conversation = {
     id: '1',
@@ -25,25 +16,34 @@ const conversation = {
 }
 
 
+
 describe('The ConversationList Component', () => {
-    let store;
-    let component;
+  afterEach(() => {
+    fetchMock.restore()
+  })
 
-    beforeEach(() => {
-      store = mockStore({
-        myState: 'sample text',
-      });
+ 
+  it('creates a conversation', () => {
+    fetchMock.postOnce('/api/v1/conversations', conversation)
+    const store = mockStore({ conversations: conversation })
 
-      store.dispatch = jest.fn();
-       
-    component = renderer.create(
-        <TestProvider store={store}>
-          <ConversationList />
-        </TestProvider>
-      );
-    });
 
-    it('should render with given state from Redux store', () => {
-        expect(component.toJSON()).toMatchSnapshot();
-    });
+    store.dispatch(createConversation())
+    return expect(store.getState()).toEqual({ conversations: conversation})
+  })
+ 
+  it('compDidMount fills the state with conversations', () => {
+    fetchMock.getOnce('/api/v1/conversations', {
+      body: { conversations: conversation },
+      headers: { 'content-type': 'application/json' }
+    })
+    const store = mockStore({ conversations: conversation })
+
+
+    store.dispatch(getAllConversations())
+    expect(store.getState()).toEqual({ conversations: conversation})
+    expect(fetchMock.called('/api/v1/conversations')).toBe(true);
+  })
 })
+
+

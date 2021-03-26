@@ -1,5 +1,5 @@
-import { fetchThoughts, createThoughts, createThought } from '../../state/Thoughts/Thoughts-Actions';
-import { FETCH_THOUGHTS }from '../../state/Thoughts/Thoughts-ActionTypes';
+import { getAllThoughtsForMessage, createThoughts, createThought } from '../../state/Thoughts/Thoughts-Actions';
+import { GET_ALL_THOUGHTS_FOR_MESSAGE_SUCCESS }from '../../state/Thoughts/Thoughts-ActionTypes';
 import fetchMock from 'fetch-mock';
 import { mockStore } from '../../config/TestProvider';
 
@@ -16,18 +16,18 @@ describe('async actions', () => {
       fetchMock.restore()
     })
   
-    it('should dispatch fetchThoughts', () => {
+    it('should dispatch getAllThoughtsForMessage', () => {
       fetchMock.getOnce('/api/v1/messages/1/thoughts', {
         body: { thoughts: [thought] },
         headers: { 'content-type': 'application/json' }
       })
   
       const expectedActions = [
-        { type: FETCH_THOUGHTS, payload: { thoughts: [thought] } }
+        { type: GET_ALL_THOUGHTS_FOR_MESSAGE_SUCCESS, payload: { thoughts: [thought] } }
       ]
       const store = mockStore({ thoughts: [] })
   
-      return store.dispatch(fetchThoughts(1)).then(() => {
+      return store.dispatch(getAllThoughtsForMessage(1)).then(() => {
         expect(store.getActions()).toEqual(expectedActions)
       })
     })
